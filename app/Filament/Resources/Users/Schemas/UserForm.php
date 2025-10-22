@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Filament\Forms\Components\RichEditor\Plugins\DisableUnderline;
+use App\Filament\Forms\Components\RichEditor\Plugins\UniqueId;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
@@ -26,6 +28,10 @@ class UserForm
                         ['blockquote', 'bulletList', 'orderedList'],
                         ['attachFiles', 'clearFormatting'],
                         ['undo', 'redo'],
+                    ])
+                    ->plugins([
+                        DisableUnderline::make(),
+                        UniqueId::make(),
                     ])
                     ->json()
                     ->columnSpanFull(),
