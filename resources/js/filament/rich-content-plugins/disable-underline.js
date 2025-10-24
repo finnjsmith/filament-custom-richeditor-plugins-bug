@@ -1,9 +1,7 @@
 // Ensure `npm run build` and `php artisan filament:assets` are executed for changes to take affect.
+import { Underline } from "@tiptap/extension-underline";
 
-import { Extension } from "@tiptap/core";
-
-const DisableUnderline = Extension.create({
-    name: "disableUnderline",
+export default Underline.extend({
     addKeyboardShortcuts() {
         return {
             // Mod = Cmd on macOS, Ctrl on Win/Linux
@@ -11,5 +9,3 @@ const DisableUnderline = Extension.create({
         };
     },
 });
-
-export default [DisableUnderline];

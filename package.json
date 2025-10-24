@@ -8,7 +8,7 @@
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.0.0",
-        "@tiptap/core": "^3.6.3",
+        "@tiptap/extension-underline": "^3.6.3",
         "@tiptap/extension-unique-id": "^3.6.2",
         "axios": "^1.11.0",
         "concurrently": "^9.0.1",
