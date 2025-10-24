@@ -1,35 +1,16 @@
 # Filament >= 4.1.2 Custom Rich Editor Plugin Bug
 
-This repository demonstrates that when upgrading from **Filament v4.1.1** to **v4.1.2**, custom `RichEditor` plugins stop working.
+~~This repository demonstrates that when upgrading from **Filament v4.1.1** to **v4.1.2**, custom `RichEditor` plugins stop working.~~
 
-## Steps to Reproduce
+This repository demonstrates how to alter custom TipTap editor JavaScript plugins to fix any issues introduced in Filament v4.1.2. 
 
-1. Remove any existing version lock for Filament in your `composer.json`, then require the latest 4.1.2 release:
-   ```bash
-   composer require filament/filament:"^4.1.2"
-   ```
+## Steps to fix
 
-2. Rebuild your frontend assets:
-   ```bash
-   npm run build
-   ```
-
-3. Publish and refresh Filament’s assets:
-   ```bash
-   php artisan filament:assets
-   ```
-
-4. Clear cached files to ensure the new assets are used:
-   ```bash
-   php artisan optimize:clear
-   ```
-
-5. Reload your Filament admin panel — custom RichEditor plugins should now fail to load, confirming the issue.
-
-
-## Original bug message in discord:
-> I implemented some custom rich editor plugins as per the documentation at the time in v4.0.x.
-Everything was working fine in 4.1.0 and 4.1.1, however since updating to 4.1.2 I've found these custom plugins have stopped working.
-I think an accidental breaking change / bug was introduced? I think the commit that has broken things is to do with the custom plugins merge: https://github.com/filamentphp/filament/pull/18049.
-
-https://discord.com/channels/883083792112300104/1430507728744222814/1430507728744222814
+1. Ensure that tip-tap extensions existing in the vanilla use `.extend()` in the configuration.
+   * See [`resources/js/filament/rich-content-plugins/disable-underline.js`](resources/js/filament/rich-content-plugins/disable-underline.js)
+     * This custom logic alters the behaviour of the underline extension.
+2. Ensure that tip-tap extensions that are added use their regularly documented methods, for example `unique-id.js` uses `.configure()`.
+   * See [`resources/js/filament/rich-content-plugins/unique-id.js`](resources/js/filament/rich-content-plugins/unique-id.js)
+     * This extension adds unique ids to the nodes listed in the configuration.
+   * See https://tiptap.dev/docs/editor/extensions/functionality/uniqueid#configuration
+3. Be aware that if you are using any custom extensions that are then added to the Rich Editor's default extension set, they will then have to be altered to use `.extend()`.
